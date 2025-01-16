@@ -41,15 +41,15 @@ export const navigationLinks = [
   ];
   
   export const FIELD_NAMES = {
-    fullname: "Full name",
+    fullName: "Full name",
     email: "Email",
-    universityId: "University ID Number",
     password: "Password",
+    universityId: "University ID Number",
     universityCard: "Upload University ID Card",
   };
   
   export const FIELD_TYPES = {
-    fullname: "text",
+    fullName: "text",
     email: "email",
     universityId: "number",
     password: "password",

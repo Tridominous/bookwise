@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn } from "react-hook-form"
 import { z, ZodType } from "zod"
- 
+import { useToast } from "@/hooks/use-toast";
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,12 +18,8 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import ImageUpload from "./ImageUpload";
+import { useRouter } from "next/navigation";
  
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
 
 interface Props<T extends FieldValues> {
     schema: ZodType<T>;
@@ -33,6 +29,8 @@ interface Props<T extends FieldValues> {
 }
 
 const AuthForm = <T extends FieldValues>({ type, schema, defaultValues, onSubmit}: Props<T>) => {
+    const { toast } = useToast();
+    const router = useRouter();
     const isSignIn = type === 'SIGN_IN'
     // Initialize the form.
   const form: UseFormReturn<T> = useForm({
@@ -41,7 +39,27 @@ const AuthForm = <T extends FieldValues>({ type, schema, defaultValues, onSubmit
   })
 
   // Define a submit handler.
-  const handleSubmit: SubmitHandler<T> = async (data) => {}
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = await onSubmit(data);
+
+    if (result.success){
+        toast({
+            title: 'Success',
+            description: isSignIn 
+                ? 'You have successfully signed in' 
+                : 'You have successfully signed up',
+        })
+        router.push('/')
+    } else {
+        toast({
+            title: `Error ${isSignIn ? 'signing in' : 'signing up'}`,
+            description: result.error ?? 'An error occurred',
+            variant: "destructive"
+        })
+    }
+
+
+  }
 
     return (
         <div className="flex flex-col gap-4">

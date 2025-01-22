@@ -56,7 +56,9 @@ const ImageUpload = ({
 }: Props) => {
 
     const ikUploadRef = useRef(null);
-    const [file, setFile] = useState< {filePath: string} | null>(null);
+    const [file, setFile] = useState<{ filePath: string | null }>({
+        filePath: value ?? null,
+    });
     const { toast } = useToast();
 
     const onError = (error: any) => {
@@ -114,10 +116,10 @@ const ImageUpload = ({
        </button>
 
          {file && <IKImage 
-                path={file.filePath}
-                alt={file.filePath}
+                path={file.filePath || undefined}
+                alt={file.filePath || "Card image"}
                  height={500}
-                 width={500}
+                 width={300}
               />
      }
     </ImageKitProvider>

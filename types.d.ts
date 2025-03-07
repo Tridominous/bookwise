@@ -9,7 +9,7 @@ interface Book {
     coverColor: string;
     coverUrl: string;
     description: string;
-    videoUrl?: string;
+    videoUrl?: string | null;
     summary: string;
     createdAt: Date | null;
    

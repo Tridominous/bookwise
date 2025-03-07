@@ -16,8 +16,14 @@ const {
 
 const authenticator = async () => {
   try {
-    const response = await fetch(`${config.env.apiEndpoint}/api/imagekit`);
+    // const response = await fetch(`${config.env.apiEndpoint}/api/imagekit`);
+    // Select API endpoint based on environment
+    const endpoint = process.env.NODE_ENV === 'production' 
+      ? `${config.env.prodAPiEndpoint}/api/imagekit`
+      : `${config.env.apiEndpoint}/api/imagekit`;
 
+    const response = await fetch(endpoint);
+    console.log("Auth response status", response.status);
     if (!response.ok) {
       const errorText = await response.text();
 
@@ -32,6 +38,12 @@ const authenticator = async () => {
 
     return { token, expire, signature };
   } catch (error: any) {
+    console.error("Authentication error:", error);
+    toast({
+      title: "Authentication failed",
+      description: error instanceof Error ? error.message : "Could not authenticate with ImageKit",
+      variant: "destructive",
+    });
     throw new Error(`Authentication request failed: ${error.message}`);
   }
 };

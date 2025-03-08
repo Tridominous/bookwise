@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
-const page = async ({params}: {params: Promise<{ id: string }>}) => {
+const Page = async ({params}: {params: Promise<{ id: string }>}) => {
     const session = await auth();
     const id = (await params).id;
 
@@ -23,7 +23,7 @@ const page = async ({params}: {params: Promise<{ id: string }>}) => {
         console.log(bookDetails)
   return (
     <>
-        <BookOverview {...bookDetails} userId={session?.user?.id as String} />
+        <BookOverview {...bookDetails} userId={session?.user?.id as string} />
 
         <div className='book-details'>
             <div className='flex-[1.5'>
@@ -47,4 +47,4 @@ const page = async ({params}: {params: Promise<{ id: string }>}) => {
   )
 }
 
-export default page
+export default Page

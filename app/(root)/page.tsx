@@ -15,7 +15,7 @@ const latestBooks = await db
   .orderBy(desc(books.createdAt)) as Book[];
   return (
     <>
-      <BookOverview {...latestBooks[0]} userId={session?.user?.id as String} />
+      <BookOverview {...latestBooks[0]} userId={session?.user?.id as string} />
 
       <BookList
         title="Latest Books"

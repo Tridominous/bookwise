@@ -7,6 +7,7 @@ import React from 'react'
 const Page = () => {
   return (
     <>
+    {/* @ts-ignore */}
         <BookList title='Borrowed Books' books={sampleBooks} />
     </>
   )

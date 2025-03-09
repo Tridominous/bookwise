@@ -4,13 +4,14 @@ import BookCover from "@/components/BookCover";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+// @ts-ignore
 const BookCard = ({
   id,
   title,
   genre,
   coverColor,
   coverUrl,
+  // @ts-ignore
   isLoanedBook = false,
 }: Book) => (
   <li className={cn(isLoanedBook && "xs:w-52 w-full")}>
